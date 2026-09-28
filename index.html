@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content="Halite" />
+<title>My Recipes</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1c1917;
+    background: #f5f4f2;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+  .page { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem; background: #fffdfb; }
+
+  /* Cover */
+  .cover { min-height: 60vh; display: flex; flex-direction: column; justify-content: center;
+           text-align: center; padding: 3rem 1.25rem; }
+  .cover h1 { font-size: 2.75rem; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+  .cover .count { font-size: 1.1rem; color: #57534e; margin: 0; }
+  .cover .date { font-size: 0.95rem; color: #78716c; margin: 1.5rem 0 0; }
+  .cover .brand { font-size: 0.8rem; color: #a8a29e; margin-top: 2.5rem;
+                  font-family: -apple-system, system-ui, sans-serif; letter-spacing: 0.02em; }
+
+  /* Table of contents */
+  .toc h2 { font-size: 1.5rem; margin: 0 0 1rem; }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { display: flex; justify-content: space-between; gap: 0.75rem;
+            padding: 0.35rem 0; border-bottom: 1px solid #ececea; }
+  .toc a { color: #1c1917; text-decoration: none; }
+  .toc .num { color: #a8a29e; font-variant-numeric: tabular-nums; min-width: 1.75rem; }
+
+  /* Recipe */
+  .recipe { padding-top: 1.5rem; }
+  .recipe-title { font-size: 1.9rem; margin: 0 0 0.35rem; letter-spacing: -0.01em; }
+  .recipe-meta { font-family: -apple-system, system-ui, sans-serif; font-size: 0.85rem;
+                 color: #78716c; margin: 0 0 0.6rem; }
+  .recipe-desc { font-style: italic; color: #44403c; margin: 0 0 1rem; }
+  .recipe-photo { width: 100%; max-height: 22rem; object-fit: cover; border-radius: 8px;
+                  margin: 0 0 1.25rem; display: block; }
+  .recipe-body { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  .recipe h3 { font-size: 1.15rem; margin: 0 0 0.5rem; border-bottom: 2px solid #e7e5e4;
+               padding-bottom: 0.25rem; }
+  .recipe h4.group { font-size: 0.95rem; margin: 0.75rem 0 0.35rem; color: #57534e;
+                     font-family: -apple-system, system-ui, sans-serif; }
+  .ingredients ul { list-style: none; padding: 0; margin: 0; }
+  .ingredients li { padding: 0.2rem 0 0.2rem 1rem; text-indent: -1rem; }
+  .ingredients li::before { content: "•"; color: #d97706; padding-right: 0.5rem; }
+  .instructions ol { padding-left: 1.25rem; margin: 0; }
+  .instructions li { padding: 0.15rem 0 0.4rem; }
+  .instructions .step-amounts { margin: 0.2rem 0 0; font-size: 0.9em; color: #6b5b3e; }
+  .nutrition { margin-top: 1.25rem; }
+  .nutrition small { font-weight: normal; color: #78716c; font-size: 0.8rem; }
+  .nutrition ul { list-style: none; padding: 0; margin: 0;
+                  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.15rem 1.5rem;
+                  font-family: -apple-system, system-ui, sans-serif; font-size: 0.9rem; }
+  .nutrition li { display: flex; justify-content: space-between; border-bottom: 1px solid #f0efed;
+                  padding: 0.15rem 0; }
+  .nutrition li span:last-child { color: #57534e; }
+  .source { font-size: 0.8rem; color: #a8a29e; margin-top: 1.25rem;
+            font-family: -apple-system, system-ui, sans-serif; }
+
+  /* Wider screens & print: ingredients beside method */
+  @media (min-width: 40rem) {
+    .recipe-body { grid-template-columns: 5fr 7fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { max-width: none; padding: 0; background: #fff; }
+    .cover, .toc, .recipe { page-break-after: always; break-after: page; }
+    .recipe:last-child { page-break-after: auto; break-after: auto; }
+    .recipe { page-break-before: always; break-before: page; padding-top: 0; }
+    .cover { page-break-before: avoid; min-height: 90vh; }
+    .recipe-body { grid-template-columns: 5fr 7fr; }
+    /* Keep a heading with its list, and don't split short blocks. */
+    h3, h4 { break-after: avoid; page-break-after: avoid; }
+    .ingredients, .nutrition, li, .recipe-photo { break-inside: avoid; page-break-inside: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+<style>
+  .site-nav { max-width: 46rem; margin: 0 auto; padding: 1rem 1.25rem 0;
+              font-family: -apple-system, system-ui, sans-serif; }
+  .site-nav a { color: #92400e; text-decoration: none; }
+  .site-nav a:hover, .site-nav a:focus { text-decoration: underline; }
+  .recipe-list { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .recipe-list li { border-bottom: 1px solid #ececea; }
+  .recipe-list a { display: block; padding: 0.65rem 0; color: #1c1917; text-decoration: none; }
+  .recipe-list a:hover, .recipe-list a:focus { color: #92400e; }
+</style></head>
+<body>
+<main class="page">
+<section class="cover">
+<h1>My Recipes</h1>
+<p class="count">33 recipes</p>
+<p class="date">Saved September 28, 2026</p>
+<p class="brand">Made with Halite</p>
+</section>
+<nav class="toc" aria-label="Table of contents">
+<h2>Recipes</h2>
+<ol class="recipe-list">
+<li><a href="mediterranean-chickpea-rice-wrap-with-tzatziki-feta-salad.html"><span class="num">1.</span> Mediterranean Chickpea-Rice Wrap with Tzatziki, Feta &amp; Salad</a></li>
+<li><a href="chicken-kebabs-with-greek-salad-tzatziki-sauce.html"><span class="num">2.</span> Chicken Kebabs with Greek Salad &amp; Tzatziki Sauce</a></li>
+<li><a href="white-bean-pasta-salad-with-tomato-cucumber-avocado-pine-nuts.html"><span class="num">3.</span> White Bean Pasta Salad with Tomato, Cucumber, Avocado &amp; Pine Nuts</a></li>
+<li><a href="curried-quinoa-salad-with-chickpeas-apples-feta.html"><span class="num">4.</span> Curried Quinoa Salad with Chickpeas, Apples &amp; Feta</a></li>
+<li><a href="black-bean-veggie-quesadillas-with-tomato-avocado-salsa.html"><span class="num">5.</span> Black Bean &amp; Veggie Quesadillas with Tomato &amp; Avocado Salsa</a></li>
+<li><a href="sweet-sour-thai-chicken-vegetable-soup.html"><span class="num">6.</span> Sweet &amp; Sour Thai Chicken Vegetable Soup</a></li>
+<li><a href="tomato-spinach-orzo-with-ground-turkey-parmesan-parsley.html"><span class="num">7.</span> Tomato-Spinach Orzo with Ground Turkey, Parmesan &amp; Parsley</a></li>
+<li><a href="chicken-bell-pepper-cashew-stir-fry-over-rice.html"><span class="num">8.</span> Chicken, Bell Pepper &amp; Cashew Stir-Fry over Rice</a></li>
+<li><a href="black-angus-rib-eyes-with-warm-kale-romanesco-and-goat-cheese-salad.html"><span class="num">9.</span> Black Angus rib-eyes with warm kale, romanesco, and goat cheese salad</a></li>
+<li><a href="chicken-bell-pepper-fajitas-with-guacamole.html"><span class="num">10.</span> Chicken &amp; Bell Pepper Fajitas with Guacamole</a></li>
+<li><a href="pasta-e-ceci-pasta-with-chickpeas.html"><span class="num">11.</span> Pasta e Ceci (Pasta with Chickpeas)</a></li>
+<li><a href="chili-salmon-tacos-with-orange-avocado-slaw-cilantro-lime-crema.html"><span class="num">12.</span> Chili Salmon Tacos with Orange-Avocado Slaw, Cilantro &amp; Lime Crema</a></li>
+<li><a href="green-goddess-chicken-salad-lettuce-cups.html"><span class="num">13.</span> Green goddess chicken salad lettuce cups</a></li>
+<li><a href="sweet-sour-coconut-popcorn-chicken-with-ginger-garlic-green-beans.html"><span class="num">14.</span> Sweet &amp; Sour Coconut Popcorn Chicken with Ginger-Garlic Green Beans</a></li>
+<li><a href="egg-salad-spinach-sandwich-with-grape-tomatoes.html"><span class="num">15.</span> Egg Salad &amp; Spinach Sandwich with Grape Tomatoes</a></li>
+<li><a href="kung-pao-tofu-with-bell-peppers-celery-cashews-over-rice.html"><span class="num">16.</span> &quot;Kung Pao&quot; Tofu with Bell Peppers, Celery &amp; Cashews over Rice</a></li>
+<li><a href="mexican-style-chicken-corn-jalapeno-cilantro-soup-with-feta.html"><span class="num">17.</span> Mexican-Style Chicken, Corn, Jalape&#241;o &amp; Cilantro Soup with Feta</a></li>
+<li><a href="tofu-bell-pepper-spinach-in-peanut-sauce-with-basmati-rice.html"><span class="num">18.</span> Tofu, Bell Pepper &amp; Spinach in Peanut Sauce with Basmati Rice</a></li>
+<li><a href="world-s-best-lasagna.html"><span class="num">19.</span> World&#39;s Best Lasagna</a></li>
+<li><a href="italian-macaroni-soup-with-veggie-ground-carrot-celery-bell-pepper.html"><span class="num">20.</span> Italian Macaroni Soup with Veggie Ground, Carrot, Celery &amp; Bell Pepper</a></li>
+<li><a href="old-fashioned-beef-stew.html"><span class="num">21.</span> Old-Fashioned Beef Stew</a></li>
+<li><a href="grilled-zucchini-veggie-wraps-with-garlic-hummus.html"><span class="num">22.</span> Grilled Zucchini &amp; Veggie Wraps with Garlic Hummus</a></li>
+<li><a href="delicata-squash-tofu-curry.html"><span class="num">23.</span> Delicata Squash &amp; Tofu Curry</a></li>
+<li><a href="sweet-potato-lentil-stew.html"><span class="num">24.</span> Sweet Potato Lentil Stew</a></li>
+<li><a href="smashed-chickpea-salad-sandwich.html"><span class="num">25.</span> Smashed Chickpea Salad Sandwich</a></li>
+<li><a href="roasted-cauliflower-black-bean-burrito-bowl-with-cilantro-lime-rice.html"><span class="num">26.</span> Roasted Cauliflower &amp; Black Bean Burrito Bowl with Cilantro Lime Rice</a></li>
+<li><a href="curry-lime-butternut-squash-cauliflower-soup-with-crispy-chickpeas.html"><span class="num">27.</span> Curry-Lime Butternut Squash &amp; Cauliflower Soup with Crispy Chickpeas</a></li>
+<li><a href="caribbean-black-bean-stew-with-mango-salsa-rice.html"><span class="num">28.</span> Caribbean Black Bean Stew with Mango Salsa &amp; Rice</a></li>
+<li><a href="cauliflower-quinoa-chickpea-salad-with-mushrooms.html"><span class="num">29.</span> Cauliflower, Quinoa &amp; Chickpea Salad with Mushrooms</a></li>
+<li><a href="garlic-grilled-shrimp.html"><span class="num">30.</span> Garlic Grilled Shrimp</a></li>
+<li><a href="potato-mushroom-soup.html"><span class="num">31.</span> Potato Mushroom Soup</a></li>
+<li><a href="tofu-lovers-hot-sour-soup-with-mushrooms.html"><span class="num">32.</span> Tofu Lovers&#39; Hot &amp; Sour Soup with Mushrooms</a></li>
+<li><a href="spicy-peanut-tofu-bowl-with-kale-savory-sesame-rice.html"><span class="num">33.</span> Spicy Peanut Tofu Bowl with Kale &amp; Savory Sesame Rice</a></li>
+</ol>
+</nav>
+</main>
+</body>
+</html>
